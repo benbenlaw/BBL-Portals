@@ -122,6 +122,7 @@ public class CustomTeleporter {
                 link
             );
         }
+
         return idkWhereToPutYou(destination, entity, blockPos3);
     }
 
