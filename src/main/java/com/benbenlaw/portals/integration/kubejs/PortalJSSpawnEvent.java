@@ -1,6 +1,5 @@
 package com.benbenlaw.portals.integration.kubejs;
 
-/*
 import dev.latvian.mods.kubejs.event.KubeEvent;
 import dev.latvian.mods.rhino.util.HideFromJS;
 import net.minecraft.core.BlockPos;
@@ -35,5 +34,3 @@ public class PortalJSSpawnEvent implements KubeEvent {
         return this.isCancelled;
     }
 }
-
- */

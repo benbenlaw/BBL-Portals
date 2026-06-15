@@ -78,6 +78,10 @@ dependencies {
     implementation("mezz.jei:jei-${jei_mc_version}-neoforge:${jei_version}")
     //BBL Core
     implementation("curse.maven:bblcore-1135181:${core_version}")
+    //KubeJS
+    implementation("curse.maven:kubejs-238086:8235730")
+    //Rhino
+    implementation("curse.maven:rhino-416294:8218748")
 }
 
 tasks.withType(ProcessResources).configureEach {

@@ -1,6 +1,6 @@
 package com.benbenlaw.portals.integration.kubejs;
 
-/*
+
 import com.benbenlaw.portals.api.CustomPortalBuilder;
 import com.benbenlaw.portals.block.PortalsBlocks;
 import com.benbenlaw.portals.util.CustomPortalApiRegistry;
@@ -59,4 +59,4 @@ public class KubeJSRegister {
     }
 }
 
- */
+

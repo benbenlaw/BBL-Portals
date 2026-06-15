@@ -3,6 +3,7 @@ package com.benbenlaw.portals;
 import com.benbenlaw.portals.api.CustomPortalBuilder;
 import com.benbenlaw.portals.block.PortalTextures;
 import com.benbenlaw.portals.block.PortalsBlocks;
+import com.benbenlaw.portals.integration.kubejs.KubeJSRegister;
 import com.benbenlaw.portals.portal.PortalPlacer;
 import com.benbenlaw.portals.portal.frame.FlatPortalAreaHelper;
 import com.benbenlaw.portals.portal.frame.VanillaPortalAreaHelper;
@@ -128,10 +129,12 @@ public class Portals{
 
         }
 
-        /*
+
         if (ModList.get().isLoaded("kubejs")) {
             KubeJSRegister.register();
         }
+
+        /*
 
         if (ModList.get().isLoaded("create")) {
             event.enqueueWork(CreateCompat::register);

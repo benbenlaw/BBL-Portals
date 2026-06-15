@@ -1,6 +1,5 @@
 package com.benbenlaw.portals.integration.kubejs;
 
-/*
 import com.benbenlaw.portals.api.BiHolder;
 import com.benbenlaw.portals.api.CustomPortalBuilder;
 import com.benbenlaw.portals.block.CustomPortalBlock;
@@ -215,4 +214,3 @@ public class PortalBuilder implements KubeStartupEvent {
     }
 }
 
- */
