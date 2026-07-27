@@ -3,6 +3,7 @@ package com.benbenlaw.portals;
 import com.benbenlaw.portals.api.CustomPortalBuilder;
 import com.benbenlaw.portals.block.PortalTextures;
 import com.benbenlaw.portals.block.PortalsBlocks;
+import com.benbenlaw.portals.event.PortalSoundEvent;
 import com.benbenlaw.portals.integration.kubejs.KubeJSRegister;
 import com.benbenlaw.portals.portal.PortalPlacer;
 import com.benbenlaw.portals.portal.frame.FlatPortalAreaHelper;
@@ -11,8 +12,10 @@ import com.benbenlaw.portals.portal.linking.PortalLinkingStorage;
 import com.benbenlaw.portals.util.*;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.profiling.jfr.Environment;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -80,6 +83,19 @@ public class Portals{
                         .tintColor(45, 65, 101)
                         .portalTexture(PortalTextures.MOLTEN)
                         .showInJEI(false)
+                        .registerBeforeTPEvent(entity -> {
+                            if (entity instanceof Player player) {
+                                player.sendSystemMessage(Component.literal("Before teleport!"));
+                            }
+                            return ShouldTeleport.CONTINUE_TP;
+                        })
+                        .registerInPortalAmbienceSound(player -> new PortalSoundEvent(SoundEvents.TNT_PRIMED, 1.0F, 1.0F))
+                        .registerPostTPPortalAmbience(player -> new PortalSoundEvent(SoundEvents.END_PORTAL_SPAWN, 1.0F, 1.0F))
+                        .registerPostTPEvent(entity -> {
+                            if (entity instanceof Player player) {
+                                player.sendSystemMessage(Component.literal("After teleport!"));
+                            }
+                        })
                         .registerPortal();
             });
 

@@ -1,5 +1,6 @@
 package com.benbenlaw.portals.block;
 
+import com.benbenlaw.portals.event.PortalSoundEvent;
 import com.benbenlaw.portals.portal.frame.PortalFrameTester;
 import com.benbenlaw.portals.util.CustomPortalApiRegistry;
 import com.benbenlaw.portals.util.CustomPortalHelper;
@@ -158,6 +159,19 @@ public class CustomPortalBlock extends Block implements Portal {
     protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
         if (entity.canUsePortal(false)) {
             entity.setAsInsidePortal(this, pos);
+        }
+
+        if (level.isClientSide()
+                && entity instanceof Player player
+                && player == Minecraft.getInstance().player
+                && level.getRandom().nextInt(100) == 0) {
+            PortalLink link = CustomPortalApiRegistry.getPortalLinkFromBase(getPortalBase(level, pos));
+            if (link != null) {
+                PortalSoundEvent sound = link.getInPortalAmbienceEvent().execute(player);
+                if (sound != null) {
+                    Minecraft.getInstance().getSoundManager().play(sound.getInstance());
+                }
+            }
         }
     }
 
