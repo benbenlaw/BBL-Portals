@@ -3,6 +3,7 @@ package com.benbenlaw.portals.portal.frame;
 import com.benbenlaw.portals.block.CustomPortalBlock;
 import com.benbenlaw.portals.block.PortalTextures;
 import com.benbenlaw.portals.block.PortalsBlocks;
+import com.benbenlaw.portals.event.PortalSoundEvent;
 import com.benbenlaw.portals.util.CustomPortalApiRegistry;
 import com.benbenlaw.portals.util.CustomPortalHelper;
 import com.benbenlaw.portals.util.PortalLink;
@@ -14,6 +15,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -226,6 +228,12 @@ public class FlatPortalAreaHelper extends PortalFrameTester {
         DimensionTransition.PostDimensionTransition post = DimensionTransition.PLAY_PORTAL_SOUND.then(entityx -> {
             entityx.placePortalTicket(portalRect.minCorner);
             link.executePostTPEvent(entityx);
+            if (entityx instanceof Player player) {
+                PortalSoundEvent sound = link.getPostTpPortalAmbienceEvent().execute(player);
+                if (sound != null) {
+                    entityx.playSound(sound.sound(), sound.volume(), sound.pitch());
+                }
+            }
         });
         return new DimensionTransition(
             world,
