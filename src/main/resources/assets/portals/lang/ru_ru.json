@@ -1,0 +1,15 @@
+{
+  "block.portals.custom_portal": "Портал",
+  "config.jade.plugin_portals.portal_name_provider": "Инструмент наименования портала",
+  "tooltip.portal.jade.to": "В %s",
+
+  "category.portals.portal_recipe": "Портал",
+
+  "portals.jei.tooltip.rotate": "Размеры портала: %sх%s",
+  "portals.jei.tooltip.corners": "Углы рамки необязательны",
+  "portals.jei.tooltip.flat": "Плоский портал",
+  "portals.jei.tooltip.nether": "Вертикальный портал",
+  "portals.jei.tooltip.item_ignition": "ПКМ предметом по рамке для активации портала",
+  "portals.jei.tooltip.fluid_ignition": "После активации жидкость пропадает",
+  "portals.jei.tooltip.place_block_ignition": "Для активации портала разместите блок"
+}
