@@ -1,5 +1,8 @@
 BBL Portals
 
+# 1.2.2
+- Fixed servers
+
 # 1.2.1
 - Re enabled sound options
 - Updated wiki with information for sounds and event pre and post with examples of both

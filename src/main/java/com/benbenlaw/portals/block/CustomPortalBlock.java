@@ -43,6 +43,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import snownee.jade.api.ITooltip;
@@ -116,6 +118,7 @@ public class CustomPortalBlock extends Block implements Portal {
 
     @Override
     public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource source) {
+
         int tintColor = CustomPortalHelper.getPortalTintColor(level, pos);
         float r = ((tintColor >> 16) & 0xFF) / 255f;
         float g = ((tintColor >> 8) & 0xFF) / 255f;
@@ -168,10 +171,15 @@ public class CustomPortalBlock extends Block implements Portal {
             entity.setAsInsidePortal(this, pos);
         }
 
-        if (world.isClientSide()
-            && entity instanceof Player player
-            && player == Minecraft.getInstance().player
-            && world.random.nextInt(100) == 0) {
+        if (world.isClientSide() && entity instanceof Player player) {
+            playPortalSounds(world, pos, player);
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void playPortalSounds(Level world, BlockPos pos, Player player) {
+
+        if (player != Minecraft.getInstance().player || world.random.nextInt(100) != 0) {
             PortalLink link = CustomPortalApiRegistry.getPortalLinkFromBase(getPortalBase(world, pos));
             if (link != null) {
                 PortalSoundEvent sound = link.getInPortalAmbienceEvent().execute(player);
