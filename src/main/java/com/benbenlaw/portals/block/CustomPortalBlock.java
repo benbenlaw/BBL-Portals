@@ -1,32 +1,22 @@
 package com.benbenlaw.portals.block;
 
-import com.benbenlaw.portals.event.PortalSoundEvent;
+import com.benbenlaw.portals.client.ClientPortalSounds;
 import com.benbenlaw.portals.portal.frame.PortalFrameTester;
 import com.benbenlaw.portals.util.CustomPortalApiRegistry;
 import com.benbenlaw.portals.util.CustomPortalHelper;
 import com.benbenlaw.portals.util.CustomTeleporter;
 import com.benbenlaw.portals.util.PortalLink;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -36,19 +26,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.portal.TeleportTransition;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class CustomPortalBlock extends Block implements Portal {
 
@@ -161,19 +144,11 @@ public class CustomPortalBlock extends Block implements Portal {
             entity.setAsInsidePortal(this, pos);
         }
 
-        if (level.isClientSide()
-                && entity instanceof Player player
-                && player == Minecraft.getInstance().player
-                && level.getRandom().nextInt(100) == 0) {
-            PortalLink link = CustomPortalApiRegistry.getPortalLinkFromBase(getPortalBase(level, pos));
-            if (link != null) {
-                PortalSoundEvent sound = link.getInPortalAmbienceEvent().execute(player);
-                if (sound != null) {
-                    Minecraft.getInstance().getSoundManager().play(sound.getInstance());
-                }
-            }
+        if (level.isClientSide() && entity instanceof Player player) {
+            ClientPortalSounds.playAmbience(level, pos, player, getPortalBase(level, pos));
         }
     }
+
 
 
     @Override
